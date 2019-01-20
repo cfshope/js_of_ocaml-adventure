@@ -1,0 +1,10 @@
+(executable
+ (name hello_world)
+ (libraries js_of_ocaml core_kernel async_kernel async_js)
+ (modes byte)
+ (preprocess (pps js_of_ocaml-ppx ppx_let)))
+
+(rule
+ (targets hello_world.js)
+ (deps    hello_world.exe)
+ (action  (run js_of_ocaml +base/runtime.js +core_kernel/runtime.js +bin_prot/runtime.js %{deps} -o %{targets})))
